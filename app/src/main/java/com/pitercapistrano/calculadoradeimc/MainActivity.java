@@ -15,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.pitercapistrano.calculadoradeimc.databinding.ActivityMainBinding;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -50,27 +52,29 @@ public class MainActivity extends AppCompatActivity {
     }
     private void calcularImc(){
 
-       Float peso = Float.parseFloat(binding.editPeso.getText().toString());
-       Float altura = Float.parseFloat(binding.editAltura.getText().toString());
+       Float peso = Float.parseFloat(binding.editPeso.getText().toString().replace(",", "."));
+       Float altura = Float.parseFloat(binding.editAltura.getText().toString().replace(",", "."));
        Float imc = peso / (altura * altura);
 
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
        if (imc < 18.5 ){
-           binding.txtResultado.setText("Seu IMC é: " + imc + "\nSeu peso está abaixo do ideal!");
+           binding.txtResultado.setText("Seu IMC é: " + decimalFormat.format(imc).replace(".", ",") + "\nSeu peso está abaixo do ideal!");
            binding.txtResultado.setTextColor(getColor(R.color.yellow));
        } else if (imc <= 24.9) {
-           binding.txtResultado.setText("Seu IMC é: " + imc + "\nSeu peso está nroma!");
+           binding.txtResultado.setText("Seu IMC é: " + decimalFormat.format(imc).replace(".", ",") + "\nSeu peso está nroma!");
            binding.txtResultado.setTextColor(getColor(R.color.green));
        } else if (imc <=29.9) {
-           binding.txtResultado.setText("Seu IMC é: " + imc + "\nVocê está com sobrepeso!");
+           binding.txtResultado.setText("Seu IMC é: " + decimalFormat.format(imc).replace(".", ",") + "\nVocê está com sobrepeso!");
            binding.txtResultado.setTextColor(getColor(R.color.gold));
        } else if (imc <= 34.9) {
-           binding.txtResultado.setText("Seu IMC é: " + imc + "\nVocê está com Obesidade (Grau I)");
+           binding.txtResultado.setText("Seu IMC é: " + decimalFormat.format(imc).replace(".", ",") + "\nVocê está com Obesidade (Grau I)");
            binding.txtResultado.setTextColor(getColor(R.color.orange));
        } else if (imc <= 39.9) {
-           binding.txtResultado.setText("Seu IMC é: " + imc + "\nVocê está com Obesidade Severa (Grau II)");
+           binding.txtResultado.setText("Seu IMC é: " + decimalFormat.format(imc).replace(".", ",") + "\nVocê está com Obesidade Severa (Grau II)");
            binding.txtResultado.setTextColor(getColor(R.color.salmao));
        }else {
-           binding.txtResultado.setText("Seu IMC é: " + imc + "\nVocê está com Obesidade Mórbida (Grau III)");
+           binding.txtResultado.setText("Seu IMC é: " + decimalFormat.format(imc).replace(".", ",") + "\nVocê está com Obesidade Mórbida (Grau III)");
            binding.txtResultado.setTextColor(getColor(R.color.red));
        }
     }
